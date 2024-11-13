@@ -1,27 +1,27 @@
-import { useState } from "react";
-import styled from "styled-components";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header'; // Certifique-se de ajustar o caminho do import conforme necessário
+import AlunoList from './components/CadUpAluno/AlunoList'; 
+import AlunoForm from './components/CadUpAluno/AlunoForm';
+import DefaultPage from './pages/DefaultPage';
+// import MotoristaList from './components/MotoristaList';
+// import PresencaList from './components/PresencaList';
+// import VeiculoList from './components/VeiculoList';
+// import RelatorioDeRotas from './components/RelatorioDeRotas';
 
-type Aluno = {nome: string, numero: number}
-
-export const App = () => {
-
-  const [estudou, setEstudou] = useState<boolean>(true);
-
-  const alunos: Aluno[] = [{nome: 'Gabriel', numero: 12345}, {nome: 'Luiz', numero: 12345}]
-
-  function AlunoComponent({aluno}: {aluno: Aluno}) {
-    const {nome, numero} = aluno;
-    return <SCAlunoComponent aluno={aluno}><p>{nome}</p><p>{numero}</p></SCAlunoComponent>
-  }
-
+const App: React.FC = () => {
   return (
-    <div className="App">
-      Hello World!
-      {alunos.map((item, index) => < AlunoComponent aluno={item} key={index}/>)}
-    </div>
-  )
-}
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<DefaultPage />} />
+        <Route path="/aluno-form/:id?" element={<AlunoForm />} />
+        <Route path="/alunos" element={<AlunoList />} />
+      </Routes>
+    </Router>
+  );
+};
 
-const SCAlunoComponent = styled.div<{ aluno: Aluno }>`
-  background-color: ${({aluno}) => aluno.nome === 'Gabriel' ? 'red' : 'blue'};
-`
+
+
+export default App;

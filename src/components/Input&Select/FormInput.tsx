@@ -6,7 +6,7 @@ const DefaultInput = css`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: clamp(1rem, 2.5vw, 1.25rem); /* Ajuste dinâmico da fonte */
-`
+`;
 
 const EntryName = styled.div`
   display: flex;
@@ -19,12 +19,24 @@ const EntryName = styled.div`
 const Input = styled.input`
   ${DefaultInput}
 `;
- 
-const FormInput = ({ label, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => {
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+`;
+
+interface FormInputProps {
+  label: string;
+  error?: string;
+}
+
+const FormInput: React.FC<React.InputHTMLAttributes<HTMLInputElement> & FormInputProps> = ({ label, error, ...props }) => {
   return (
     <EntryName>
       <label htmlFor={props.id}>{label}</label>
-      <Input id={props.id} {...props} />
+      <Input id={props.id} {...props} required />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </EntryName>
   );
 };

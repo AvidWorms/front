@@ -11,6 +11,7 @@ interface GenericListProps {
 
 const GenericList: React.FC<GenericListProps> = ({ items, onEdit, onDelete, onAdd, renderItem }) => {
   const [search, setSearch] = useState('');
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -21,6 +22,19 @@ const GenericList: React.FC<GenericListProps> = ({ items, onEdit, onDelete, onAd
       value.toString().toLowerCase().includes(search.toLowerCase())
     )
   );
+
+  const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm('Tem certeza de que deseja deletar este item?');
+    if (confirmDelete) {
+      try {
+        await onDelete(id);  // Chama a função de deleção
+        alert('Item deletado com sucesso!');
+        setSelectedItemId(null);  // Limpa o item selecionado após a exclusão
+      } catch (error) {
+        alert('Ocorreu um erro ao deletar o item.');
+      }
+    }
+  };
 
   return (
     <Container>
@@ -41,7 +55,7 @@ const GenericList: React.FC<GenericListProps> = ({ items, onEdit, onDelete, onAd
             </ItemContent>
             <ButtonContainer>
               <Button onClick={() => onEdit(item.id)}>Editar</Button>
-              <Button deleteButton onClick={() => onDelete(item.id)}>Deletar</Button>
+              <Button deleteButton onClick={() => handleDelete(item.id)}>Deletar</Button>
             </ButtonContainer>
           </ListItem>
         ))}
@@ -54,19 +68,19 @@ export default GenericList;
 
 const Container = styled.div`
   width: 100%;
-  margin-top: 2rem;  // Espaço em relação ao topo da página
+  margin-top: 2rem;
 `;
 
 const SearchContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;  // Mantém a barra de busca centralizada
-  margin-bottom: 2rem;  // Espaçamento maior para mover a caixa de busca para baixo
+  justify-content: center;
+  margin-bottom: 2rem;
 `;
 
 const SearchBar = styled.input`
-  padding: 1rem;  // Aumenta a altura da caixa de busca
-  font-size: 1.25rem;  // Aumenta o tamanho da fonte da caixa de busca
+  padding: 1rem;
+  font-size: 1.25rem;
   width: 100%;
   max-width: 500px;
   margin-right: 1rem;
@@ -80,12 +94,11 @@ const AddButton = styled.button`
   font-size: 1.25rem;
   cursor: pointer;
   display: flex;
-  align-items: center;  // Alinha o ícone e o texto verticalmente
+  align-items: center;
 `;
 
-
 const ListContainer = styled.div`
-  margin-top: 4rem;  // Espaçamento maior entre a caixa de busca e a lista
+  margin-top: 4rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -97,9 +110,9 @@ const ListItem = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;  // Aumenta a largura máxima do item da lista
-  padding: 2rem;  // Aumenta o padding dos itens da lista
-  margin-bottom: 2rem;  // Espaçamento maior entre os itens da lista
+  max-width: 1200px;
+  padding: 2rem;
+  margin-bottom: 2rem;
   border-bottom: 1px solid #ddd;
   flex-wrap: wrap;
 
@@ -113,18 +126,18 @@ const ItemContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  font-size: 1.5rem;  // Aumenta o tamanho da fonte dos itens da lista
+  font-size: 1.5rem;
 
   @media (max-width: 600px) {
     width: 100%;
-    font-size: 1.25rem;  // Ajusta o tamanho da fonte para telas menores
+    font-size: 1.25rem;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;  // Aumenta o espaçamento entre os botões
+  gap: 1rem;
 
   @media (max-width: 600px) {
     width: 100%;
@@ -133,14 +146,15 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button<{ deleteButton?: boolean }>`
-  background-color: ${({ deleteButton }) => (deleteButton ? '#d9534f' : '#007bff')};  // Mantém o "Editar" azul e o "Deletar" vermelho
+  background-color: ${({ deleteButton }) => (deleteButton ? '#d9534f' : '#007bff')};
   color: white;
   border: none;
-  padding: 1rem 2rem;  // Aumenta o padding dos botões
-  font-size: 1.25rem;  // Aumenta o tamanho da fonte dos botões
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
   cursor: pointer;
 
   @media (max-width: 600px) {
     flex: 1;
   }
 `;
+

@@ -8,8 +8,8 @@ interface DadosTurmaProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-export const DadosTurma: React.FC<DadosTurmaProps> = ({ formData, handleChange }) => (
-  <FormSection legend = "Dados da Turma">
+export const DadosTurnoRota: React.FC<DadosTurmaProps> = ({ formData, handleChange }) => (
+  <FormSection legend = "Turno e Rota">
         <FormSelect options={
           [
             {label:'Selecione',value:"1"},
@@ -17,7 +17,7 @@ export const DadosTurma: React.FC<DadosTurmaProps> = ({ formData, handleChange }
             {label:'Tarde',value:"T" },
             {label:'Noite',value:"N" }
           ]
-          } label='Turno das Aulas' name="turnoEstudo" value={formData.turnoEstudo} onChange={handleChange} required />
-      <FormInput label="Código da Turma" type="text" name="codigoTurma" value={formData.codigoTurma} onChange={handleChange} />
+          } label='Turno de Trabalho' name="turnoTrabalho" value={formData.turnoTrabalho} onChange={handleChange} required />
+      <FormInput label="Rota" type="text" name="rotaTrabalho" value={formData.rotaTrabalho} onChange={handleChange} />
   </FormSection>
 );

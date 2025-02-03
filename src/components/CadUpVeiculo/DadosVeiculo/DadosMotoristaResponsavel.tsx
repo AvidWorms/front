@@ -3,13 +3,13 @@ import FormSection from '../../FormPatern/FormSection';
 import FormSelect from '../../Input&Select/FormSelect';
 import FormInput from '../../Input&Select/FormInput';
 
-interface DadosTurmaProps {
+interface DadosMotoristaResponsavelProps {
   formData: any;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-export const DadosTurma: React.FC<DadosTurmaProps> = ({ formData, handleChange }) => (
-  <FormSection legend = "Dados da Turma">
+export const DadosMotoristaResponsavel: React.FC<DadosMotoristaResponsavelProps> = ({ formData, handleChange }) => (
+  <FormSection legend = "Dados Motorista Responsavel">
         <FormSelect options={
           [
             {label:'Selecione',value:"1"},
@@ -17,7 +17,7 @@ export const DadosTurma: React.FC<DadosTurmaProps> = ({ formData, handleChange }
             {label:'Tarde',value:"T" },
             {label:'Noite',value:"N" }
           ]
-          } label='Turno das Aulas' name="turnoEstudo" value={formData.turnoEstudo} onChange={handleChange} required />
-      <FormInput label="Código da Turma" type="text" name="codigoTurma" value={formData.codigoTurma} onChange={handleChange} />
+          } label='Turno das Aulas' name="turno" value={formData.turno} onChange={handleChange} required />
+      <FormInput label="DadosMotoristaResaponsavel" type="text" name="DadosMOtoristaResponsavel" value={formData.codigoTurma} onChange={handleChange} />
   </FormSection>
 );

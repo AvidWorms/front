@@ -25,6 +25,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
   fieldComponents
 }) => {
   const [formData, setFormData] = useState<any>(initialData);
+  console.log(formData)
 
   useEffect(() => {
     console.log('Selected Item ID:', selectedItemId);
@@ -52,6 +53,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(formData)
     if (selectedItemId) {
       await updateItem(selectedItemId, formData);
     } else {
